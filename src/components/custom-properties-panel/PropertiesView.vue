@@ -8,16 +8,16 @@
         <span>{{ element.id }}</span>
       </fieldset>
       <fieldset class="element-item">
-        <label>name</label>
-        <input :value="element.name" @change="event => changeField(event, 'name')" />
+        <label>名称</label>
+        <input :value="element.name" @change="event => changeField(event, 'name')"/>
       </fieldset>
       <fieldset class="element-item">
-        <label>customProps</label>
-        <input :value="element.customProps" @change="event => changeField(event, 'customProps')" />
+        <label>自定义属性</label>
+        <input :value="element.customProps" @change="event => changeField(event, 'customProps')"/>
       </fieldset>
       <fieldset class="element-item">
         <label>节点颜色</label>
-        <input type="color" :value="element.color" @change="event => changeField(event, 'color')" />
+        <input type="color" :value="element.color" @change="event => changeField(event, 'color')"/>
       </fieldset>
       <fieldset class="element-item" v-if="isEvent">
         <label>修改event节点类型</label>
@@ -36,7 +36,8 @@
 </template>
 
 <script>
-import { START_EVENT } from 'bpmn-js/lib/features/replace/ReplaceOptions.js'
+import {START_EVENT} from 'bpmn-js/lib/features/replace/ReplaceOptions.js'
+
 export default {
   name: 'PropertiesView',
   props: {
@@ -50,17 +51,17 @@ export default {
       selectedElements: [],
       element: null,
       eventTypes: [
-        { label: '默认', value: '' },
-        { label: 'MessageEventDefinition', value: 'bpmn:MessageEventDefinition' },
-        { label: 'TimerEventDefinition', value: 'bpmn:TimerEventDefinition' },
-        { label: 'ConditionalEventDefinition', value: 'bpmn:ConditionalEventDefinition' }
+        {label: '默认', value: ''},
+        {label: 'MessageEventDefinition', value: 'bpmn:MessageEventDefinition'},
+        {label: 'TimerEventDefinition', value: 'bpmn:TimerEventDefinition'},
+        {label: 'ConditionalEventDefinition', value: 'bpmn:ConditionalEventDefinition'}
       ],
       eventType: '',
       taskTypes: [
-        { label: 'Task', value: 'bpmn:Task' },
-        { label: 'ServiceTask', value: 'bpmn:ServiceTask' },
-        { label: 'SendTask', value: 'bpmn:SendTask' },
-        { label: 'UserTask', value: 'bpmn:UserTask' }
+        {label: 'Task', value: 'bpmn:Task'},
+        {label: 'ServiceTask', value: 'bpmn:ServiceTask'},
+        {label: 'SendTask', value: 'bpmn:SendTask'},
+        {label: 'UserTask', value: 'bpmn:UserTask'}
       ],
       taskType: ''
     }
@@ -70,7 +71,7 @@ export default {
   },
   methods: {
     init() {
-      const { modeler } = this
+      const {modeler} = this
       console.log(modeler)
       console.log(START_EVENT)
       modeler.on('selection.changed', e => {
@@ -80,8 +81,8 @@ export default {
         this.setDefaultProperties()
       })
       modeler.on('element.changed', e => {
-        const { element } = e
-        const { element: currentElement } = this
+        const {element} = e
+        const {element: currentElement} = this
         if (!currentElement) {
           return
         }
@@ -92,10 +93,10 @@ export default {
       })
     },
     setDefaultProperties() {
-      const { element } = this
+      const {element} = this
       if (element) {
-        const { type, businessObject } = element
-        const { name } = businessObject
+        const {type, businessObject} = element
+        const {name} = businessObject
         if (this.verifyIsEvent(type)) {
           this.eventType = businessObject.eventDefinitions ? businessObject.eventDefinitions[0]['$type'] : ''
           console.log(this.eventType)
@@ -129,13 +130,13 @@ export default {
       this.updateProperties(properties)
     },
     updateName(name) {
-      const { modeler, element } = this
+      const {modeler, element} = this
       const modeling = modeler.get('modeling')
       modeling.updateLabel(element, name)
     },
     onChangeColor(color) {
       console.log(color)
-      const { modeler, element } = this
+      const {modeler, element} = this
       const modeling = this.modeler.get('modeling')
       modeling.setColor(element, {
         fill: null,
@@ -144,7 +145,7 @@ export default {
     },
     changeEventType(event) {
       console.log(event)
-      const { modeler, element } = this
+      const {modeler, element} = this
       const value = event.target.value
       const bpmnReplace = modeler.get('bpmnReplace')
       this.eventType = value
@@ -155,7 +156,7 @@ export default {
     },
     changeTaskType(event) {
       console.log(event)
-      const { modeler, element } = this
+      const {modeler, element} = this
       const value = event.target.value
       const bpmnReplace = modeler.get('bpmnReplace')
       bpmnReplace.replaceElement(element, {
@@ -167,18 +168,18 @@ export default {
      * @param { Object } 要更新的属性, 例如 { name: '' }
      */
     updateProperties(properties) {
-      const { modeler, element } = this
+      const {modeler, element} = this
       const modeling = modeler.get('modeling')
       modeling.updateProperties(element, properties)
     }
   },
   computed: {
     isEvent() {
-      const { element } = this
+      const {element} = this
       return this.verifyIsEvent(element.type)
     },
     isTask() {
-      const { element } = this
+      const {element} = this
       return this.verifyIsTask(element.type)
     }
   }
@@ -196,11 +197,13 @@ export default {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
   padding: 20px;
 }
+
 .empty {
   height: 200px;
   line-height: 200px;
   font-weight: 700;
 }
+
 .element-item {
   padding: 10px;
   margin-top: 5px;
@@ -208,9 +211,11 @@ export default {
   border-color: darkorange;
   border-radius: 8px;
 }
+
 .element-item:first-child {
   margin-top: 0;
 }
+
 .custom-properties-panel input,
 .custom-properties-panel textarea {
   padding: 4px 11px;
@@ -223,6 +228,7 @@ export default {
   transition: all 0.3s;
   outline: none;
 }
+
 .custom-properties-panel input:focus,
 .custom-properties-panel button:focus,
 .custom-properties-panel textarea:focus,
@@ -230,6 +236,7 @@ export default {
   border-color: rgb(239, 112, 96);
   box-shadow: 0 0 1px 2px rgb(239, 112, 96, 0.2);
 }
+
 .custom-properties-panel label {
   font-weight: bold;
 }

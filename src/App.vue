@@ -3,12 +3,13 @@
     <div class="content">
       <ul class="router_ul">
         <router-link
-          v-for="link in links"
-          :key="link.to"
-          tag="li"
-          active-class="activeClass"
-          :to="link.to"
-        >{{ link.title }}</router-link>
+            v-for="link in links"
+            :key="link.to"
+            tag="li"
+            active-class="activeClass"
+            :to="link.to"
+        >{{ link.title }}
+        </router-link>
       </ul>
       <router-view></router-view>
     </div>
@@ -22,9 +23,9 @@ export default {
   data() {
     return {
       links: [
-        { to: '/properties-panel-extension', title: 'properties-panel-extension' },
-        { to: '/custom-properties-panel', title: 'custom-properties-panel' },
-        { to: '/custom-color', title: 'custom-color' }
+        {to: '/properties-panel-extension', title: 'properties-panel-extension'},
+        {to: '/custom-properties-panel', title: 'custom-properties-panel'},
+        {to: '/custom-color', title: 'custom-color'}
       ]
     }
   }
@@ -39,9 +40,11 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+
 body {
   margin: 0;
 }
+
 .router_ul {
   display: flex;
   justify-content: center;
@@ -49,6 +52,7 @@ body {
   list-style: none;
   padding: 10px 0;
 }
+
 .router_ul li {
   margin-left: 10px;
   padding: 5px 10px;
@@ -58,6 +62,7 @@ body {
   cursor: pointer;
   transition: all 0.3s;
 }
+
 .router_ul li.activeClass {
   background: #4d90fe;
   color: #fff;
